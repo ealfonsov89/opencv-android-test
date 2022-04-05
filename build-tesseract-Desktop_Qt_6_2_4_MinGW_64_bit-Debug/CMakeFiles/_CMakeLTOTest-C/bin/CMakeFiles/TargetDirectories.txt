@@ -1,0 +1,4 @@
+D:/project/Qt/build-tesseract-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/foo.dir
+D:/project/Qt/build-tesseract-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/boo.dir
+D:/project/Qt/build-tesseract-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/edit_cache.dir
+D:/project/Qt/build-tesseract-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/rebuild_cache.dir

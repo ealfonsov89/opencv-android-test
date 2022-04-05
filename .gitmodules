@@ -1,0 +1,4 @@
+[submodule "OpenCV-MinGW-Build"]
+	path = OpenCV-MinGW-Build
+	url = https://github.com/huihut/OpenCV-MinGW-Build.git
+	branch = OpenCV-4.5.5-x64

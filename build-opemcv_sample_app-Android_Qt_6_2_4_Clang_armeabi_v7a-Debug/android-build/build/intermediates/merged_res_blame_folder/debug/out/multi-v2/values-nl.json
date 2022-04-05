@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\project\\Qt\\build-opemcv_sample_app-Android_Qt_6_2_4_Clang_armeabi_v7a-Debug\\android-build\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-nl\\values-nl.xml",
+            "map": [
+                {
+                    "source": "D:\\Qt\\6.2.4\\android_armv7\\src\\android\\java\\res\\values-nl\\strings.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "57,189",
+                        "endColumns": "130,103",
+                        "endOffsets": "183,288"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,186",
+                        "endColumns": "130,103",
+                        "endOffsets": "181,285"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+QMAKE_CXX.QT_COMPILER_STDCXX = 201402L
+QMAKE_CXX.QMAKE_CLANG_MAJOR_VERSION = 11
+QMAKE_CXX.QMAKE_CLANG_MINOR_VERSION = 0
+QMAKE_CXX.QMAKE_CLANG_PATCH_VERSION = 5
+QMAKE_CXX.QMAKE_GCC_MAJOR_VERSION = 4
+QMAKE_CXX.QMAKE_GCC_MINOR_VERSION = 2
+QMAKE_CXX.QMAKE_GCC_PATCH_VERSION = 1
+QMAKE_CXX.COMPILER_MACROS = \
+    QT_COMPILER_STDCXX \
+    QMAKE_CLANG_MAJOR_VERSION \
+    QMAKE_CLANG_MINOR_VERSION \
+    QMAKE_CLANG_PATCH_VERSION \
+    QMAKE_GCC_MAJOR_VERSION \
+    QMAKE_GCC_MINOR_VERSION \
+    QMAKE_GCC_PATCH_VERSION
+QMAKE_CXX.INCDIRS = \
+    C:/msys64/mingw64/include/c++/11.2.0 \
+    C:/msys64/mingw64/include/c++/11.2.0/x86_64-w64-mingw32 \
+    C:/msys64/mingw64/include/c++/11.2.0/backward \
+    C:/Users/ealfo/AppData/Local/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/windows-x86_64/lib64/clang/11.0.5/include \
+    C:/msys64/mingw64/include
+QMAKE_CXX.LIBDIRS = \
+    C:/Users/ealfo/AppData/Local/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/windows-x86_64/lib64/clang/11.0.5 \
+    C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/11.2.0 \
+    C:/msys64/mingw64/x86_64-w64-mingw32/lib \
+    C:/msys64/mingw64/lib \
+    C:/msys64/mingw64/x86_64-w64-mingw32/sys-root/mingw/lib
