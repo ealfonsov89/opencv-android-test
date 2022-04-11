@@ -2,7 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <opencv2/imgproc.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/dnn/dnn.hpp>
+
+#include "recognition.h"
+#include "detection.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,10 +18,14 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    cv::Mat CannyThreshold(cv::Mat src);
+    QImage Mat2QImage(cv::Mat const& src);
+    cv::Mat QImage2Mat(QImage const& src);
+    cv::Mat MonoCromaticMat(cv::Mat const& src);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+    Recognition *recognitionModel;
+    Detection *detectionModel;
 };
 #endif // MAINWINDOW_H

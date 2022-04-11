@@ -9,11 +9,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    detection.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    recognition.cpp
 
 HEADERS += \
-    mainwindow.h
+    detection.h \
+    mainwindow.h \
+    recognition.h
 
 FORMS += \
     mainwindow.ui
@@ -34,6 +38,7 @@ windows {
     LIBS += $$OPENCV_DESKTOP_WINDOWS/x64/mingw/bin/libopencv_core455.dll
     LIBS += $$OPENCV_DESKTOP_WINDOWS/x64/mingw/bin/libopencv_imgproc455.dll
     LIBS += $$OPENCV_DESKTOP_WINDOWS/x64/mingw/bin/libopencv_dnn455.dll
+    LIBS += $$OPENCV_DESKTOP_WINDOWS/x64/mingw/bin/libopencv_imgcodecs455.dll
 }
 
 OPENCV_ANDROID=../OpenCV-android-sdk
@@ -54,3 +59,7 @@ android {
     }
 
 }
+
+DISTFILES += \
+    VGG_CTC.onnx \
+    alphabet_94.txt

@@ -24,6 +24,7 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QLabel *label;
+    QLabel *textDetected;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -31,12 +32,15 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(800, 575);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(8, -5, 791, 451));
+        label->setGeometry(QRect(8, -5, 791, 411));
+        textDetected = new QLabel(centralwidget);
+        textDetected->setObjectName(QString::fromUtf8("textDetected"));
+        textDetected->setGeometry(QRect(0, 470, 261, 41));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -55,6 +59,7 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        textDetected->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
     } // retranslateUi
 
 };

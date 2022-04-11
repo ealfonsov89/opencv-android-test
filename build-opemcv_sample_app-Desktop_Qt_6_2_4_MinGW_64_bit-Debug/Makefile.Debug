@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++1z -Wall -Wextra -Wextra
 INCPATH       = -I../opemcv_sample_app -I. -I../OpenCV-MinGW-Build/include -I../../../Qt/6.2.4/mingw_64/include -I../../../Qt/6.2.4/mingw_64/include/QtWidgets -I../../../Qt/6.2.4/mingw_64/include/QtGui -I../../../Qt/6.2.4/mingw_64/include/QtCore -Idebug -I. -I/include -I../../../Qt/6.2.4/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        ..\OpenCV-MinGW-Build\x64\mingw\bin\libopencv_core455.dll ..\OpenCV-MinGW-Build\x64\mingw\bin\libopencv_imgproc455.dll D:\Qt\6.2.4\mingw_64\lib\libQt6Widgets.a D:\Qt\6.2.4\mingw_64\lib\libQt6Gui.a D:\Qt\6.2.4\mingw_64\lib\libQt6Core.a -lmingw32 D:\Qt\6.2.4\mingw_64\lib\libQt6EntryPoint.a -lshell32  
+LIBS        =        ..\OpenCV-MinGW-Build\x64\mingw\bin\libopencv_core455.dll ..\OpenCV-MinGW-Build\x64\mingw\bin\libopencv_imgproc455.dll ..\OpenCV-MinGW-Build\x64\mingw\bin\libopencv_dnn455.dll ..\OpenCV-MinGW-Build\x64\mingw\bin\libopencv_imgcodecs455.dll D:\Qt\6.2.4\mingw_64\lib\libQt6Widgets.a D:\Qt\6.2.4\mingw_64\lib\libQt6Gui.a D:\Qt\6.2.4\mingw_64\lib\libQt6Core.a -lmingw32 D:\Qt\6.2.4\mingw_64\lib\libQt6EntryPoint.a -lshell32  
 QMAKE         = D:\Qt\6.2.4\mingw_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -50,16 +50,25 @@ OBJECTS_DIR   = debug
 
 ####### Files
 
-SOURCES       = ..\opemcv_sample_app\main.cpp \
-		..\opemcv_sample_app\mainwindow.cpp debug\qrc_qmake_qmake_qm_files.cpp \
+SOURCES       = ..\opemcv_sample_app\detection.cpp \
+		..\opemcv_sample_app\main.cpp \
+		..\opemcv_sample_app\mainwindow.cpp \
+		..\opemcv_sample_app\recognition.cpp debug\qrc_qmake_qmake_qm_files.cpp \
 		debug\moc_mainwindow.cpp
-OBJECTS       = debug/main.o \
+OBJECTS       = debug/detection.o \
+		debug/main.o \
 		debug/mainwindow.o \
+		debug/recognition.o \
 		debug/qrc_qmake_qmake_qm_files.o \
 		debug/moc_mainwindow.o
 
-DIST          =  ..\opemcv_sample_app\mainwindow.h ..\opemcv_sample_app\main.cpp \
-		..\opemcv_sample_app\mainwindow.cpp
+DIST          = VGG_CTC.onnx \
+		alphabet_94.txt ..\opemcv_sample_app\detection.h \
+		..\opemcv_sample_app\mainwindow.h \
+		..\opemcv_sample_app\recognition.h ..\opemcv_sample_app\detection.cpp \
+		..\opemcv_sample_app\main.cpp \
+		..\opemcv_sample_app\mainwindow.cpp \
+		..\opemcv_sample_app\recognition.cpp
 QMAKE_TARGET  = opemcv_sample_app
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = opemcv_sample_app.exe
@@ -79,10 +88,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) opemcv_sample_app.zip $(SOURCES) $(DIST) ..\opemcv_sample_app\opemcv_sample_app.pro ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\spec_pre.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\device_config.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\sanitize.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\gcc-base.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\g++-base.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\win32\windows_vulkan_sdk.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\windows-vulkan.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\g++-win32.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\windows-desktop.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\qconfig.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_ext_freetype.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_ext_libpng.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_core.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_core_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_dbus.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_dbus_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_designer.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_entrypoint_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_fb_support_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_gui.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_help.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_help_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsanimation.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsanimation_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labssettings.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labssettings_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labssharedimage.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labssharedimage_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_linguist.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_linguist_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_network.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_network_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_opengl.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_openglwidgets.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_openglwidgets_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_packetprotocol_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qml.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlcore.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlcore_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmldebug_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmldom_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlmodels.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlmodels_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quick.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrols2.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicklayouts.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicklayouts_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickshapes_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicktemplates2.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_sql.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_svg.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_svgwidgets.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_svgwidgets_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_testlib.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_tools_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_uiplugin.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_uitools.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_widgets.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_xml.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_zlib_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qt_functions.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qt_config.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\win32-g++\qmake.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\spec_post.prf .qmake.stash ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\exclusive_builds.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\toolchain.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\default_pre.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\win32\default_pre.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\resolve_config.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\exclusive_builds_post.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\default_post.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\build_pass.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\lrelease.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qml_debug.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\entrypoint.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\precompile_header.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\warn_on.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qt.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\resources_functions.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\resources.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\moc.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\win32\opengl.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\uic.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qmake_use.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\file_copies.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\win32\windows.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\testcase_targets.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\exceptions.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\yacc.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\lex.prf ..\opemcv_sample_app\opemcv_sample_app.pro debug\qmake_qmake_qm_files.qrc ..\..\..\Qt\6.2.4\mingw_64\lib\Qt6Widgets.prl ..\..\..\Qt\6.2.4\mingw_64\lib\Qt6Gui.prl ..\..\..\Qt\6.2.4\mingw_64\lib\Qt6Core.prl ..\..\..\Qt\6.2.4\mingw_64\lib\Qt6EntryPoint.prl ..\opemcv_sample_app\opemcv_sample_app_es_CU.ts ..\opemcv_sample_app\opemcv_sample_app_es_CU.ts ..\opemcv_sample_app\opemcv_sample_app_es_CU.ts   debug\qmake_qmake_qm_files.qrc ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\data\dummy.cpp ..\opemcv_sample_app\mainwindow.h  ..\opemcv_sample_app\main.cpp ..\opemcv_sample_app\mainwindow.cpp ..\opemcv_sample_app\mainwindow.ui    
+	$(ZIP) opemcv_sample_app.zip $(SOURCES) $(DIST) ..\opemcv_sample_app\opemcv_sample_app.pro ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\spec_pre.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\device_config.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\sanitize.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\gcc-base.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\g++-base.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\win32\windows_vulkan_sdk.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\windows-vulkan.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\g++-win32.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\common\windows-desktop.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\qconfig.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_ext_freetype.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_ext_libpng.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_core.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_core_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_dbus.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_dbus_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_designer.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_entrypoint_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_fb_support_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_gui.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_help.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_help_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsanimation.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsanimation_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labssettings.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labssettings_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labssharedimage.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labssharedimage_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_linguist.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_linguist_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_network.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_network_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_opengl.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_openglwidgets.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_openglwidgets_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_packetprotocol_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qml.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlcore.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlcore_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmldebug_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmldom_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlmodels.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlmodels_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quick.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrols2.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicklayouts.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicklayouts_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickshapes_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicktemplates2.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_sql.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_svg.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_svgwidgets.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_svgwidgets_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_testlib.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_tools_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_uiplugin.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_uitools.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_widgets.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_xml.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\modules\qt_lib_zlib_private.pri ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qt_functions.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qt_config.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\win32-g++\qmake.conf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\spec_post.prf .qmake.stash ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\exclusive_builds.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\toolchain.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\default_pre.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\win32\default_pre.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\resolve_config.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\exclusive_builds_post.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\default_post.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\build_pass.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\lrelease.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qml_debug.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\entrypoint.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\precompile_header.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\warn_on.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qt.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\resources_functions.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\resources.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\moc.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\win32\opengl.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\uic.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\qmake_use.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\file_copies.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\win32\windows.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\testcase_targets.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\exceptions.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\yacc.prf ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\lex.prf ..\opemcv_sample_app\opemcv_sample_app.pro debug\qmake_qmake_qm_files.qrc ..\..\..\Qt\6.2.4\mingw_64\lib\Qt6Widgets.prl ..\..\..\Qt\6.2.4\mingw_64\lib\Qt6Gui.prl ..\..\..\Qt\6.2.4\mingw_64\lib\Qt6Core.prl ..\..\..\Qt\6.2.4\mingw_64\lib\Qt6EntryPoint.prl ..\opemcv_sample_app\opemcv_sample_app_es_CU.ts ..\opemcv_sample_app\opemcv_sample_app_es_CU.ts ..\opemcv_sample_app\opemcv_sample_app_es_CU.ts   debug\qmake_qmake_qm_files.qrc ..\..\..\Qt\6.2.4\mingw_64\mkspecs\features\data\dummy.cpp ..\opemcv_sample_app\detection.h ..\opemcv_sample_app\mainwindow.h ..\opemcv_sample_app\recognition.h  ..\opemcv_sample_app\detection.cpp ..\opemcv_sample_app\main.cpp ..\opemcv_sample_app\mainwindow.cpp ..\opemcv_sample_app\recognition.cpp ..\opemcv_sample_app\mainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\qrc_qmake_qmake_qm_files.o debug\moc_mainwindow.o
+	-$(DEL_FILE) debug\detection.o debug\main.o debug\mainwindow.o debug\recognition.o debug\qrc_qmake_qmake_qm_files.o debug\moc_mainwindow.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -252,6 +261,7 @@ debug/moc_mainwindow.cpp: ../opemcv_sample_app/mainwindow.h \
 		../../../Qt/6.2.4/mingw_64/include/QtCore/qnativeinterface.h \
 		../../../Qt/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt/6.2.4/mingw_64/include/QtGui/qicon.h \
+		../OpenCV-MinGW-Build/include/opencv2/imgproc/imgproc.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/imgproc.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core/cvdef.h \
@@ -284,6 +294,17 @@ debug/moc_mainwindow.cpp: ../opemcv_sample_app/mainwindow.h \
 		../OpenCV-MinGW-Build/include/opencv2/core/optim.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core/ovx.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/imgproc/segmentation.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/async.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/version.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dict.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/layer.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/utils/inference_engine.hpp \
+		../opemcv_sample_app/recognition.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/QString \
+		../opemcv_sample_app/detection.h \
 		debug/moc_predefs.h \
 		../../../Qt/6.2.4/mingw_64/bin/moc.exe
 	D:\Qt\6.2.4\mingw_64\bin\moc.exe $(DEFINES) --include D:/project/Qt/build-opemcv_sample_app-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/debug/moc_predefs.h -ID:/Qt/6.2.4/mingw_64/mkspecs/win32-g++ -ID:/project/Qt/opemcv_sample_app -ID:/project/Qt/OpenCV-MinGW-Build/include -ID:/Qt/6.2.4/mingw_64/include -ID:/Qt/6.2.4/mingw_64/include/QtWidgets -ID:/Qt/6.2.4/mingw_64/include/QtGui -ID:/Qt/6.2.4/mingw_64/include/QtCore -I. -ID:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -ID:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -ID:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -ID:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -ID:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -ID:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\opemcv_sample_app\mainwindow.h -o debug\moc_mainwindow.cpp
@@ -310,6 +331,50 @@ compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_
 
 
 ####### Compile
+
+debug/detection.o: ../opemcv_sample_app/detection.cpp ../opemcv_sample_app/detection.h \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/cvdef.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/version.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/hal/interface.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/cv_cpu_dispatch.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/cv_cpu_helper.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/hal/msa_macros.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/fast_math.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/base.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/opencv_modules.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/cvstd.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/cvstd_wrapper.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/neon_utils.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/vsx_utils.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/check.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/traits.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/matx.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/saturate.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/types.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/mat.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/bufferpool.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/mat.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/persistence.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/operations.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/cvstd.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/utility.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/utils/instrumentation.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/utils/tls.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/optim.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/ovx.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/async.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/version.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dict.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/layer.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/utils/inference_engine.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/imgproc/imgproc.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/imgproc.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/imgproc/segmentation.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\detection.o ..\opemcv_sample_app\detection.cpp
 
 debug/main.o: ../opemcv_sample_app/main.cpp ../opemcv_sample_app/mainwindow.h \
 		../../../Qt/6.2.4/mingw_64/include/QtWidgets/QMainWindow \
@@ -441,6 +506,7 @@ debug/main.o: ../opemcv_sample_app/main.cpp ../opemcv_sample_app/mainwindow.h \
 		../../../Qt/6.2.4/mingw_64/include/QtCore/qnativeinterface.h \
 		../../../Qt/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt/6.2.4/mingw_64/include/QtGui/qicon.h \
+		../OpenCV-MinGW-Build/include/opencv2/imgproc/imgproc.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/imgproc.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core/cvdef.h \
@@ -473,6 +539,17 @@ debug/main.o: ../opemcv_sample_app/main.cpp ../opemcv_sample_app/mainwindow.h \
 		../OpenCV-MinGW-Build/include/opencv2/core/optim.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core/ovx.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/imgproc/segmentation.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/async.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/version.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dict.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/layer.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/utils/inference_engine.hpp \
+		../opemcv_sample_app/recognition.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/QString \
+		../opemcv_sample_app/detection.h \
 		../../../Qt/6.2.4/mingw_64/include/QtWidgets/QApplication \
 		../../../Qt/6.2.4/mingw_64/include/QtWidgets/qapplication.h \
 		../../../Qt/6.2.4/mingw_64/include/QtCore/qcoreapplication.h \
@@ -629,6 +706,7 @@ debug/mainwindow.o: ../opemcv_sample_app/mainwindow.cpp ../opemcv_sample_app/mai
 		../../../Qt/6.2.4/mingw_64/include/QtCore/qnativeinterface.h \
 		../../../Qt/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt/6.2.4/mingw_64/include/QtGui/qicon.h \
+		../OpenCV-MinGW-Build/include/opencv2/imgproc/imgproc.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/imgproc.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core/cvdef.h \
@@ -661,6 +739,17 @@ debug/mainwindow.o: ../opemcv_sample_app/mainwindow.cpp ../opemcv_sample_app/mai
 		../OpenCV-MinGW-Build/include/opencv2/core/optim.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/core/ovx.hpp \
 		../OpenCV-MinGW-Build/include/opencv2/imgproc/segmentation.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/async.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/version.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dict.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/layer.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/utils/inference_engine.hpp \
+		../opemcv_sample_app/recognition.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/QString \
+		../opemcv_sample_app/detection.h \
 		ui_mainwindow.h \
 		../../../Qt/6.2.4/mingw_64/include/QtCore/QVariant \
 		../../../Qt/6.2.4/mingw_64/include/QtWidgets/QApplication \
@@ -706,8 +795,142 @@ debug/mainwindow.o: ../opemcv_sample_app/mainwindow.cpp ../opemcv_sample_app/mai
 		../../../Qt/6.2.4/mingw_64/include/QtCore/qcalendar.h \
 		../../../Qt/6.2.4/mingw_64/include/QtWidgets/qdialog.h \
 		../../../Qt/6.2.4/mingw_64/include/QtGui/QImage \
-		../OpenCV-MinGW-Build/include/opencv2/imgproc/imgproc.hpp
+		../OpenCV-MinGW-Build/include/opencv2/imgcodecs/imgcodecs.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/imgcodecs.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\opemcv_sample_app\mainwindow.cpp
+
+debug/recognition.o: ../opemcv_sample_app/recognition.cpp ../opemcv_sample_app/recognition.h \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/cvdef.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/version.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/hal/interface.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/cv_cpu_dispatch.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/cv_cpu_helper.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/hal/msa_macros.h \
+		../OpenCV-MinGW-Build/include/opencv2/core/fast_math.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/base.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/opencv_modules.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/cvstd.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/cvstd_wrapper.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/neon_utils.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/vsx_utils.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/check.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/traits.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/matx.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/saturate.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/types.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/mat.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/bufferpool.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/mat.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/persistence.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/operations.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/cvstd.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/utility.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/utils/instrumentation.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/utils/tls.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/optim.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/ovx.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/core/async.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/version.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dict.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/layer.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/dnn.inl.hpp \
+		../OpenCV-MinGW-Build/include/opencv2/dnn/utils/inference_engine.hpp \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/QString \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstring.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qchar.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qglobal.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qconfig.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qtcore-config.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qsysinfo.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qlogging.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qflags.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qatomic.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qnumeric.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qversiontagging.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstringview.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qbytearray.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qrefcount.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qnamespace.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qtmetamacros.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qarraydata.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qpair.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qarraydatapointer.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qarraydataops.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qcontainertools_impl.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qbytearrayalgorithms.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qbytearrayview.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstringliteral.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstringalgorithms.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qanystringview.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qutf8stringview.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstringtokenizer.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/QImage \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qimage.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qtguiglobal.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qtgui-config.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qcolor.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qrgb.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstringlist.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qlist.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qiterator.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qalgorithms.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qrgba64.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qpaintdevice.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qrect.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qmargins.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qsize.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qpoint.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qpixelformat.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qtransform.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qpolygon.h \
+		../../../Qt/6.2.4/mingw_64/include/QtGui/qregion.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qdatastream.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qiodevicebase.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qline.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/QFile \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qfile.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qfiledevice.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qiodevice.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qobject.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qcoreevent.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qmetatype.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qcompare.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qscopeguard.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qiterable.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qmetacontainer.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qcontainerinfo.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qtaggedpointer.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qmath.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qobject_impl.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qbindingstorage.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/QTextStream \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qtextstream.h \
+		../../../Qt/6.2.4/mingw_64/include/QtCore/qstringconverter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\recognition.o ..\opemcv_sample_app\recognition.cpp
 
 debug/qrc_qmake_qmake_qm_files.o: debug/qrc_qmake_qmake_qm_files.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\qrc_qmake_qmake_qm_files.o debug\qrc_qmake_qmake_qm_files.cpp
